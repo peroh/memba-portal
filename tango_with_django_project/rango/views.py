@@ -2,7 +2,9 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Rango says hey there partner!<br> <a href='" + reverse('about') + "'>About</a>")
+    context_dict = {'boldmessage': "Crunchy, creamy, cookie!"}
+    return render(request, 'rango/index.html', context=context_dict)
+    # return HttpResponse("Rango says hey there partner!<br> <a href='" + reverse('about') + "'>About</a>")
 
 
 def about(request):
