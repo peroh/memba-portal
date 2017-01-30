@@ -19,6 +19,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -29,7 +31,6 @@ SECRET_KEY = 'gl1#1kebv3%b@#hr3%=71**^yhy=2p1t-9#=s%m^x!y&dl)lj7'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -64,6 +65,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

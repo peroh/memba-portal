@@ -8,4 +8,8 @@ def index(request):
 
 
 def about(request):
-    return HttpResponse("Rango says this is the about page.<br> <a href='" + reverse('index') + "''>Home</a>")
+    context_dict = {
+        'user_name': "Matt Perrott"
+    }
+    return render(request, 'rango/about.html', context=context_dict)
+    # return HttpResponse("Rango says this is the about page.<br> <a href='" + reverse('index') + "''>Home</a>")
