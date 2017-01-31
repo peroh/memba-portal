@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+{% load staticfiles %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +9,7 @@
 </head>
 <body>
 
-<img src="{{ MEDIA_URL }}cat.jpg" alt="Funny cat" />
+<img src="{% static "images/cat.jpg" %}" alt="Funny cat" />
 <p>This tutorial has been put together by {{ user_name }}</p>
 <a href="/rango/">Home</a>
 </body>
