@@ -13,10 +13,32 @@
 
 <div>
     hey there partner! <br />
-    <strong>{{ boldmessage }}</strong><br />
+</div>
+<div>
+    {% if not category_by_likes or not category_by_views %}
+        <strong>There are no categories present.</strong>
+    {% else %}
+        {% if category_by_likes %}
+            <p><strong>Categories - Top Likes</strong></p>
+            <ul>
+                {% for category in category_by_likes %}
+                    <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if category_by_views %}
+            <p><strong>Categories - Top Views</strong></p>
+            <ul>
+                {% for category in category_by_views %}
+                    <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
 </div>
 <div>
     <a href="/rango/about/">About</a><br />
+    <a href="/rango/add_category/">Add Category</a><br />
     <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
 </div>
 
