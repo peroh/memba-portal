@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 
-# TODO Update URLs to use revese() function
 
 def index(request):
     category_list_likes = Category.objects.order_by('-likes')[:5]
@@ -11,7 +10,7 @@ def index(request):
     context_dict = {'boldmessage': "Crunchy, creamy, cookie!",
                     'category_by_likes': category_list_likes,
                     'category_by_views': category_list_views}
-    return render(request, reverse() ''rango/index.html', context=context_dict)
+    return render(request, 'rango/index.html', context=context_dict)
     # return HttpResponse("Rango says hey there partner!<br> <a href='" + reverse('about') + "'>About</a>")
 
 
@@ -19,12 +18,14 @@ def about(request):
     context_dict = {
         'user_name': "Matt Perrott"
     }
+    print request.session
+    print request.method
     return render(request, 'rango/about.html', context=context_dict)
     # return HttpResponse("Rango says this is the about page.<br> <a href='" + reverse('index') + "''>Home</a>")
 
 def show_category(request, category_name_slug):
+    context_dict = {}
     try:
-        context_dict = {}
         category = Category.objects.get(slug=category_name_slug)
         pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
