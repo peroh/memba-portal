@@ -23,11 +23,12 @@
             <li><a href="{% url 'rango:add_category' %}">Add New Category</a></li>
             <li><a href="{% url 'rango:about' %}">About</a></li>
             <li><a href="{% url 'rango:index' %}">Home</a></li>
+            <li><a href="{% url 'rango:register' %}">Sign Up</a></li>
         </ul>
     </div>
     <div>
         {% block sidebar_block %}
-            {% get_category_list %}
+            {% get_category_list category %}
         {% endblock %}
     </div>
 </body>
