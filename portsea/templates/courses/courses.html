@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+{% extends 'portal/base.html' %}
+
+{% block body_block %}
+    <h3>Courses</h3>
+    <div class="flex-container flex-wrap">
+        <a href="{% url 'courses:add_course' %}">Add Course</a>
+    </div>
+    {% if course_list %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for course in course_list %}
+                <tbody>
+                    <tr>
+                        <td><a href="{% url 'courses:course_detail' course_id=course.id %}">{{ course.course_name }}</a></td>
+                        <td>{{ course.course_type }}</td>
+                        <td>{{ course.course_start_date }}</td>
+                        <td>{{ course.course_end_date }}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No courses registered</p>
+    {% endif %}
+
+{% endblock %}

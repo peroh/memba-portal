@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends 'portal/base.html' %}
+{% block title_block %}Add Course{% endblock %}
+
+{% block body_block %}
+
+    <form id="add_course" method="post" action="{% url 'courses:add_course' %}">
+    {% csrf_token %}
+    <table class="table table-bordered course-detail">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ form.course_name }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ form.course_type }}</td>
+            </tr>
+            <tr>
+                <td>Start Date</td>
+                <td>{{ form.course_start_date }}</td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>{{ form.course_end_date }}</td>
+            </tr>
+            <tr>
+                <td>Paperwork</td>
+                <td>
+                    <li>
+                        <a href="" class="btn btn-outline-success btn-sm btn-block btn-btm-marg">Add Custom Paperwork</a>
+                    </li>
+                {% if paperwork_history %}
+                    <div class="flex-column">
+                    <ul>
+                    <li>
+                        <button id="btn-edit" class="btn btn-outline-warning btn-sm btn-block btn-btm-marg">Edit Paperwork</button>
+                    </li>
+                    {% for paperwork in paperwork_history %}
+                        <li>
+                            <div id="paperwork_name">{{ paperwork }}</div>
+                            <a href="" class="btn btn-outline-danger table-side-button btn-trash hidden"><i class="fa fa-trash-o"></i></a>
+                            <a href="{% url 'courses:download_pdf'  download_type='download' paperwork_id=paperwork.id %}"
+                            class="btn btn-outline-primary table-side-button">Download</a>
+                            <a target="_blank" href="{% url 'courses:download_pdf'  download_type='inline' paperwork_id=paperwork.id %}"
+                            class="btn btn-outline-success table-side-button">Show</a>
+                        </li>
+                    {% endfor %}
+{#                    {% if multiple_paperwork %}#}
+                        <li>
+                            <a href="" class="btn btn-outline-primary btn-sm btn-block btn-top-marg">Download All</a>
+                        </li>
+{#                    {% endif %}#}
+                    </ul>
+                    </div>
+                {% else %}
+                    No paperwork added yet.
+                {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit" name="submit">Add</button>
+{#    <a href="{% url 'courses:course_detail' course_id=course.id %}" class="btn btn-danger">Cancel</a>#}
+    </form>
+
+<a href="{% url 'courses:courses' %}" class="btn btn-outline-secondary">Back to Courses</a>
+{#<a href="{% url 'courses:edit_course' course_id=course.id %}" class="btn btn-outline-warning">Edit</a>#}
+
+<script type="text/javascript">
+
+    $("#btn-edit").click(function() {
+        $(".course-detail .btn-trash").toggleClass("hidden");
+    });
+
+{#document.querySelector("#btn-edit").addEventListener("click",#}
+{#        function() {document.querySelectorAll(".course-detail .btn-trash").})#}
+</script>
+
+{% endblock %}

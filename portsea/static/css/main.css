@@ -1,0 +1,135 @@
+/* -- Holy Grail -- */
+
+.HolyGrail {
+  /*display: flex;*/
+  min-height: 100vh;
+  /*flex-direction: column;*/
+}
+
+.HolyGrail-body {
+  display: flex;
+  flex: 1;
+}
+
+.HolyGrail-content {
+  flex: 0;
+  justify-content: flex-start;
+}
+
+.HolyGrail-nav, .HolyGrail-ads {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+}
+
+.HolyGrail-nav {
+  /* put the nav on the left */
+  order: -1;
+}
+
+.HolyGrail,
+.HolyGrail-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.HolyGrail-nav {
+  order: -1;
+}
+
+/* -- Nav  -- */
+
+#nav-list {
+    padding: 0;
+}
+
+#nav-list li {
+    padding: 10px 0px;
+    text-align: center;
+    list-style: none;
+}
+
+/* -- Header / Footer -- */
+
+header, footer {
+    padding: 20px;
+    text-align: center;
+    /*background-color: #d8d8d8;*/
+    margin-bottom: 5px
+}
+
+
+.header {
+    height: 100px;
+    background-color: white;
+}
+
+/* -- Tables -- */
+
+.course-detail .table-side-button {
+    display: flex;
+    float: right;
+    flex: 0 0;
+    margin: 2px;
+}
+
+.course-detail .table-side-button.hidden {
+    opacity: 0;
+}
+
+.course-detail ul {
+    padding-left: 0px;
+    margin: 0px;
+}
+
+.course-detail li {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-end;
+    list-style: none;
+    padding: 2px 0px;
+}
+
+.course-detail #paperwork_name {
+    display: flex;
+    flex: 1 0;
+}
+
+.course-detail .btn-btm-marg {
+    margin-bottom: 10px;
+}
+
+.course-detail .btn-top-marg {
+    margin-top: 10px;
+}
+
+
+/* Body - Flex */
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container a {
+    display: inherit;
+    padding: 10px;
+    align-items: center;
+}
+
+/* -- Responsive -- */
+
+@media (min-width: 768px) {
+  .HolyGrail-body {
+    flex-direction: row;
+    flex: 1;
+  }
+  .HolyGrail-content {
+    flex: 1;
+  }
+  .HolyGrail-nav, .HolyGrail-ads {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+  }
+}
+

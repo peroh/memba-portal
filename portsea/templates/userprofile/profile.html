@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends 'portal/base.html' %}
+
+{% block title_block %}
+    Profile
+{% endblock %}
+
+{% block body_block %}
+
+    <h1>Profile</h1>
+
+    {% for field in form %}
+        {{ field.error }}
+    {% endfor %}
+
+    <form action="/accounts/profile/" method="post">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="update" />
+    </form>
+
+{% endblock %}
