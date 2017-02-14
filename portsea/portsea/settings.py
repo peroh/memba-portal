@@ -31,7 +31,7 @@ SECRET_KEY = '(2fhi-yo$s8)^cc+5(@ee39892=lmzmr=p&kzj9iah97b=tq!@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mperrott.pythonanywhere.com']
 
 
 # Application definition
