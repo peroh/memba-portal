@@ -7,6 +7,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from custom_user_official.models import MyUser
 from courses.models import Course
 from awards.models import Award
+from members.models import Member
 
 
 class UserCreationForm(forms.ModelForm):
@@ -64,6 +65,9 @@ class CourseInlineAdmin(admin.TabularInline):
 class AwardInlineAdmin(admin.TabularInline):
     model = Award.members.through
 
+class MemberInlineAdmin(admin.TabularInline):
+    model = Member
+
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -92,7 +96,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
         ),
     )
-    inlines = (CourseInlineAdmin, AwardInlineAdmin)
+    inlines = (CourseInlineAdmin, AwardInlineAdmin, MemberInlineAdmin)
     # add_fieldsets = (
     #     (None, {
     #         'classes': ('wide',),
