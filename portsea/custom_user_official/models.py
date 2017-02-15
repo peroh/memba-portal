@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from club.models import Club
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -49,6 +50,7 @@ class MyUser(AbstractBaseUser):
     last_name = models.CharField(max_length=128)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    club = models.ForeignKey('club.Club', null=True, blank=True, default=None)
 
     objects = MyUserManager()
 

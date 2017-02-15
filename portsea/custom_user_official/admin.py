@@ -5,6 +5,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from custom_user_official.models import MyUser
+from courses.models import Course
+from awards.models import Award
 
 
 class UserCreationForm(forms.ModelForm):
@@ -15,15 +17,15 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email',)
 
-    # def clean_password2(self):
-    #     # Check that the two password entries match
-    #     password1 = self.cleaned_data.get("password1")
-    #     password2 = self.cleaned_data.get("password2")
-    #     if password1 and password2 and password1 != password2:
-    #         raise forms.ValidationError("Passwords don't match")
-    #     return password2
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -48,7 +50,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('email', 'password', 'last_name', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'last_name', 'is_active', 'is_admin',)
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -56,6 +58,11 @@ class UserChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
+class CourseInlineAdmin(admin.TabularInline):
+    model = Course.members.through
+
+class AwardInlineAdmin(admin.TabularInline):
+    model = Award.members.through
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -65,11 +72,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'first_name', 'last_name', 'is_admin', 'club')
+    list_filter = ('is_admin', 'club')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name',)}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'club',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # fieldsets = (
@@ -85,6 +92,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
         ),
     )
+    inlines = (CourseInlineAdmin, AwardInlineAdmin)
     # add_fieldsets = (
     #     (None, {
     #         'classes': ('wide',),

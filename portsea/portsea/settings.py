@@ -31,7 +31,7 @@ SECRET_KEY = '(2fhi-yo$s8)^cc+5(@ee39892=lmzmr=p&kzj9iah97b=tq!@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mperrott.pythonanywhere.com']
+ALLOWED_HOSTS = ['mperrott.pythonanywhere.com', 'localhost']
 
 
 # Application definition
@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'portal',
     'members',
     'courses',
+    'club',
     'custom_user_official',
+    'awards',
+    'events',
     # 'registration',
     'bootstrap_toolkit',
     'django.contrib.admin',
