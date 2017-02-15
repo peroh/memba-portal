@@ -52,6 +52,13 @@ def edit_course(request, course_id=None):
     else:
         return render(request, 'courses/course_add.html', context=context_dict_add)
 
+def course_members(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    member_list = course.members.all()
+    context_dict = {
+        'member_list': member_list,
+    }
+    return render(request, 'courses/course_members.html', context_dict)
 
 def download_pdf(request, paperwork_id, download_type):
 

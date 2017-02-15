@@ -56,6 +56,10 @@
                 {% endif %}
                 </td>
             </tr>
+            <tr>
+                <td>Attendees</td>
+                <td>{{ course.members.count }}<a href="{% url 'courses:course_members' course_id=course.id %}" class="btn btn-outline-primary btn-sm table-side-button">Show List</a></td>
+            </tr>
         </tbody>
     </table>
 
