@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-# import userprofile
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name="admin"),
     url(r'^', include('portal.urls')),
     url(r'^members/', include('members.urls')),
     url(r'^courses/', include('courses.urls')),
+    url(r'^events/', include('events.urls')),
     # url(r'^accounts/profile/$', userprofile.views.user_profile),
     # url(r'^accounts/', include('registration.backends.simple.urls')),
 ]
