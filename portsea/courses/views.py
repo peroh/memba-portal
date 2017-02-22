@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, reverse
 from courses.models import Course, PaperworkHistory
-from courses.forms import CourseForm
+from courses.forms import CourseForm, AddCourseMembers
 
 
 def courses(request):
@@ -57,8 +57,30 @@ def course_members(request, course_id):
     member_list = course.members.all()
     context_dict = {
         'member_list': member_list,
+        'course': course
     }
     return render(request, 'courses/course_members.html', context_dict)
+
+def add_course_members(request, course_id):
+
+    course = Course.objects.get(pk=course_id)
+    form = AddCourseMembers()
+
+    if request.method == 'POST':
+        form = AddCourseMembers(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('courses:course_detail', kwargs={'course_id':course.id}))
+        else:
+            print form.errors
+
+    context_dict = {
+        'course': course,
+        'form': form,
+    }
+
+    return render(request, 'courses/course_add_members.html', context_dict)
+
 
 def download_pdf(request, paperwork_id, download_type):
 

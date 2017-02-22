@@ -21,7 +21,7 @@ class Course(models.Model):
     course_start_date = models.DateField(null=True, blank=True)
     course_end_date = models.DateField(null=True, blank=True)
     club = models.ForeignKey('club.Club', null=True, default=None)
-    members = models.ManyToManyField('custom_user_official.MyUser')
+    members = models.ManyToManyField('members.Member')
     # trainer = models.ForeignKey('members.Member', related_name="trainer_set", blank=True)
     # assessor = models.ForeignKey('members.Member', related_name="assessor_set", blank=True)
 

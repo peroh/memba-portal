@@ -3,7 +3,8 @@
 
 {% block body_block %}
 
-    <h3>Attendees</h3>
+    <p>Attendees for <strong>{{ course.course_name }}</strong></p>
+    <a href="{% url 'courses:add_course_members' course.id %}">Add Members</a>
     <div class="flex-container flex-wrap">
 {#        <a href="{% url 'members:add_member' %}">Add Member</a>#}
     </div>
@@ -19,9 +20,9 @@
             {% for member in member_list %}
                 <tbody>
                     <tr>
-                        <td>{{ member.first_name }}</td>
-                        <td>{{ member.last_name }}</td>
-                        <td>{{ member.email }}</td>
+                        <td>{{ member.user.first_name }}</td>
+                        <td>{{ member.user.last_name }}</td>
+                        <td>{{ member.user.email }}</td>
                     </tr>
                 </tbody>
             {% endfor %}

@@ -1,5 +1,6 @@
 from django import forms
 from courses.models import Course, CourseType
+from members.models import Member
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import ClearableFileInput
 
@@ -20,3 +21,10 @@ class CourseForm(forms.ModelForm):
         self.fields['course_type'].label = "Award"
         self.fields['course_start_date'].label = "Start Date"
         self.fields['course_end_date'].label = "End Date"
+
+class AddCourseMembers(forms.ModelForm):
+    members = forms.ModelChoiceField(queryset=Member.objects.all())
+
+    class Meta:
+        model = Member
+        exclude = ['user', 'date_of_birth', 'club']

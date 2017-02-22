@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from custom_user_official.models import MyUser
 from custom_user_official.admin import UserCreationForm
-# from portsea import courses
+from members.forms import MemberForm
 
 
 def members(request):
@@ -12,19 +12,20 @@ def members(request):
 
 
 def add_member(request):
-
-    form = UserCreationForm()
-
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
+        uf = UserCreationForm(request.POST, prefix='user')
+        upf = MemberForm(request.POST, prefix='userprofile')
+        if uf.is_valid() and upf.is_valid():
+            user = uf.save()
+            userprofile = upf.save(commit=False)
+            userprofile.user = user
+            userprofile.save()
             return HttpResponseRedirect(reverse('members:add_member_success'))
-        else:
-            print(form.errors)
+    else:
+        uf = UserCreationForm(prefix='user')
+        upf = MemberForm(prefix='userprofile')
+    return render(request, 'members/add_member.html', {'uf': uf, 'upf': upf})
 
-    return render(request, 'members/add_member.html', {'form': form})
 
 def add_member_success(request):
     context_dict = {}

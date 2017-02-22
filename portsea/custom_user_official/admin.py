@@ -6,8 +6,9 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from custom_user_official.models import MyUser
 from courses.models import Course
-from awards.models import Award
+# from awards.models import Award
 from members.models import Member
+from courses.admin import CourseInlineAdmin
 
 
 class UserCreationForm(forms.ModelForm):
@@ -59,14 +60,14 @@ class UserChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
-class CourseInlineAdmin(admin.TabularInline):
-    model = Course.members.through
+# class CourseInlineAdmin(admin.TabularInline):
+#     model = Course.members.through
 
-class AwardInlineAdmin(admin.TabularInline):
-    model = Award.members.through
+# class AwardInlineAdmin(admin.TabularInline):
+#     model = Award.members.through
 
-class MemberInlineAdmin(admin.TabularInline):
-    model = Member
+# class MemberInlineAdmin(admin.TabularInline):
+#     model = Member
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -76,33 +77,20 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'is_admin', 'club')
-    list_filter = ('is_admin', 'club')
+    list_display = ('email', 'first_name', 'last_name', 'is_admin',)
+    list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'club',)}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
-    # fieldsets = (
-    #     (None, {'fields': ('email',)}),
-    #     ('Personal info', {'fields': ('first_name', 'last_name',)}),
-    #     ('Permissions', {'fields': ('is_admin',)}),
-    # )
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2',)}
         ),
     )
-    inlines = (CourseInlineAdmin, AwardInlineAdmin, MemberInlineAdmin)
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('email', 'first_name', 'last_name',)}
-    #     ),
-    # )
+    # inlines = (MemberInlineAdmin,)
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()

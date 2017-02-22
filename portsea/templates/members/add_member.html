@@ -10,15 +10,8 @@
     <div>
         <form id="member_form" method="post" action="{% url 'members:add_member' %}">
             {% csrf_token %}
-{#            {% for hidden in form.hidden_fields %}#}
-{#                {{ hidden }}#}
-{#            {% endfor %}#}
-{#            {% for field in form.visible_fields %}#}
-{#                {{ field.errors }}#}
-{#                {{ field.help_text }}#}
-{#                {{ field }}#}
-{#            {% endfor %}#}
-            {{ form.as_p }}
+            {{ uf.as_p }}
+            {{ upf.as_p }}
             <input type="submit" name="submit" value="Add Member" />
         </form>
     </div>

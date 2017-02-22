@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^edit_course/(?P<course_id>[0-9]+)/$', views.edit_course, name="edit_course"),
     url(r'^course_detail/(?P<course_id>[0-9]+)/$', views.course_detail, name="course_detail"),
     url(r'^course_detail/(?P<course_id>[0-9]+)/members/$', views.course_members, name="course_members"),
+    url(r'^course_detail/(?P<course_id>[0-9]+)/members/add_member/$', views.add_course_members, name="add_course_members"),
     url(r'^course_detail/(?P<download_type>[\w]+)/(?P<paperwork_id>[0-9]+)/$', views.download_pdf, name="download_pdf"),
     url(r'^course_detail/show/(?P<paperwork_id>[0-9]+)/$', views.download_pdf, name="show_pdf"),
 ]
