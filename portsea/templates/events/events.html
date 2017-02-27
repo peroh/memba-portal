@@ -24,8 +24,8 @@
             </thead>
             {% for event in event_list %}
                 <tbody>
-                    <tr>
-                        <td><a href="{% url 'events:event_detail' event_id=event.id %}">{{ event.name }}</a></td>
+                    <tr class="clickable-row" data-url="{% url 'events:event_detail' event_id=event.id %}">
+                        <td>{{ event.name }}</td>
                         <td>{{ event.type }}</td>
                         <td>{{ event.date }}</td>
                         <td>{{ event.start_time }}</td>

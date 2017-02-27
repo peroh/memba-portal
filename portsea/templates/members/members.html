@@ -20,8 +20,8 @@
             </thead>
             <tbody>
             {% for user in user_list %}
-                <tr>
-                    <td><a href="{% url 'members:member_detail' user.id %}">{{ user.first_name }}</a></td>
+                <tr  class="clickable-row" data-url="{% url 'members:member_detail' user.id %}">
+                    <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.email }}</td>
                 </tr>
