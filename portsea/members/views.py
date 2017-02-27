@@ -1,9 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
-from myuser.models import MyUser
-from myuser.admin import MyUserCreationFormPassword, MyUserCreationForm
 from members.forms import MemberForm
-from members.models import Member
+from myuser.forms import MyUserCreationFormPassword, MyUserCreationForm
+from myuser.models import MyUser
 
 
 def members(request):

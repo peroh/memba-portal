@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
-from myuser.models import MyUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 
 class Member(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
