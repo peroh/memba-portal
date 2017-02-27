@@ -7,12 +7,39 @@
     <h1>
         Add a Member
     </h1>
-    <div>
-        <form id="member_form" method="post" action="{% url 'members:add_member' %}">
-            {% csrf_token %}
-            {{ uf.as_p }}
-            {{ mf.as_p }}
-            <input type="submit" name="submit" value="Add Member" />
-        </form>
-    </div>
+
+    <form id="add_member" method="post" action="{% url 'members:add_member' %}">
+        {% csrf_token %}
+        <table class="table table-bordered course-detail">
+            <tbody>
+                <tr>
+                    <td>First Name</td>
+                    <td>{{ uf.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>{{ uf.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ uf.email }}</td>
+                </tr>
+                <tr>
+                    <td>Date of Birth</td>
+                    <td>{{ mf.date_of_birth }}</td>
+                </tr>
+                <tr>
+                    <td>Club</td>
+                    <td>{{ mf.club }}</td>
+                </tr>
+                <tr>
+                    <td>Active?</td>
+                    <td>{{ uf.is_active }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary" type="submit" name="submit">Add Member</button>
+        <a href="{% url 'members:members' %}" class="btn btn-danger">Cancel</a>
+    </form>
+
 {% endblock %}
