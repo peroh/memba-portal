@@ -103,6 +103,10 @@ header, footer {
     margin-top: 10px;
 }
 
+tr.clickable-row {
+    cursor: pointer;
+}
+
 
 /* Body - Flex */
 

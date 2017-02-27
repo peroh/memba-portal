@@ -1,6 +1,7 @@
 from django import forms
 from courses.models import Course, CourseType
 from members.models import Member
+from myuser.models import MyUser
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import ClearableFileInput
 
@@ -23,8 +24,19 @@ class CourseForm(forms.ModelForm):
         self.fields['course_end_date'].label = "End Date"
 
 class AddCourseMembers(forms.ModelForm):
-    members = forms.ModelChoiceField(queryset=Member.objects.all())
 
     class Meta:
-        model = Member
-        exclude = ['user', 'date_of_birth', 'club']
+        model = Course
+        exclude = ['course_type', 'course_name', 'course_start_date', 'course_end_date', 'club', 'members']
+
+    def __init__(self, *args, **kwargs):
+        course_id = kwargs.pop('course_id')
+        # get members registered to course
+        members_registered = Course.objects.get(id=course_id).members.all()
+        # list of all members not registered to course
+        members_not_registered = Member.objects.exclude(id__in=members_registered)
+        super(AddCourseMembers, self).__init__(*args, **kwargs)
+        self.fields['members'] = forms.ModelMultipleChoiceField(
+            queryset=members_not_registered,
+            widget=forms.CheckboxSelectMultiple
+        )

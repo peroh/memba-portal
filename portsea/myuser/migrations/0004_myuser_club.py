@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('club', '0001_initial'),
-        ('custom_user_official', '0003_myuser_first_name'),
+        ('myuser', '0003_myuser_first_name'),
     ]
 
     operations = [

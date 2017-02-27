@@ -2,40 +2,31 @@
 {% extends 'portal/base.html' %}
 
 {% block body_block %}
-{#    Member Section#}
-{#    <a href="{% url 'members:add_member' %}">Add Member</a>#}
-{#    {% if member_list %}#}
-{#        <ul>#}
-{#    {% for member in member_list %}#}
-{#        <li>{{ member.email }}</li>#}
-{#    {% endfor %}#}
-{#        </ul>#}
-{#    {% endif %}#}
 
     <h3>Members</h3>
     <div class="flex-container flex-wrap">
         <a href="{% url 'members:add_member' %}">Add Member</a>
     </div>
-    {% if member_list %}
+    {% if not user_list %}
+        <p>No members to show.</p>
+    {% else %}
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                </tr>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
             </thead>
-            {% for member in member_list %}
-                <tbody>
-                    <tr>
-                        <td>{{ member.first_name }}</td>
-                        <td>{{ member.last_name }}</td>
-                        <td>{{ member.email }}</td>
-                    </tr>
-                </tbody>
+            <tbody>
+            {% for user in user_list %}
+                <tr>
+                    <td><a href="{% url 'members:member_detail' user.id %}">{{ user.first_name }}</a></td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
             {% endfor %}
+            </tbody>
         </table>
-    {% else %}
-        <p>No members to show.</p>
     {% endif %}
 {% endblock %}

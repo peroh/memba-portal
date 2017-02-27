@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'portal/base.html' %}
+{% block title_block %}Add Event{% endblock %}
+
+{% block body_block %}
+
+
+    <form id="add_event" method="post" action="{% url 'events:add_event' %}">
+    {% csrf_token %}
+    <table class="table table-bordered course-detail">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ form.type }}</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>{{ form.date }}</td>
+            </tr>
+            <tr>
+                <td>Start Time</td>
+                <td>{{ form.start_time }}</td>
+            </tr>
+            <tr>
+                <td>End Time</td>
+                <td>{{ form.end_time }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit" name="submit">Add</button>
+{#    <a href="{% url 'courses:course_detail' course_id=course.id %}" class="btn btn-danger">Cancel</a>#}
+    </form>
+
+<a href="{% url 'events:events' %}" class="btn btn-outline-secondary">Back to Events</a>
+
+
+{% endblock %}

@@ -6,9 +6,9 @@
 
 {% block body_block %}
 
-    <p>{{ course }}</p>
+    <p>{{ event }}</p>
     {% if members_not_registered %}
-    <form id="add_course_members" method="post" action="{% url 'courses:add_course_members' course.id %}">
+    <form id="add_event_members" method="post" action="{% url 'events:add_event_members' event.id %}">
     {% csrf_token %}
         {{ form }}
         <button class="btn btn-primary" type="submit" name="submit">Add</button>

@@ -13,7 +13,7 @@ class EventType(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=128)
-    member_signup = models.ManyToManyField('custom_user_official.MyUser', through='events.EventSignup')
+    member_signup = models.ManyToManyField('members.Member', through='events.EventSignup')
     date = models.DateField(null=True, blank=True, default=now)
     start_time = models.TimeField(null=True, blank=True, default=now)
     end_time = models.TimeField(null=True, blank=True, default=now)
@@ -24,8 +24,9 @@ class Event(models.Model):
 
 class EventSignup(models.Model):
     event = models.ForeignKey('events.Event')
-    member = models.ForeignKey('custom_user_official.MyUser')
-    date = models.DateField(null=True, blank=True, default=now)
-    start_time = models.TimeField(null=True, blank=True, default=now)
-    end_time = models.TimeField(null=True, blank=True, default=now)
+    member = models.ForeignKey('members.Member')
+    signup_time = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "%s %s" % (self.event, self.member)
 

@@ -3,8 +3,8 @@
 
 {% block body_block %}
 
-    <p>Attendees for <strong>{{ course.course_name }}</strong></p>
-    <a href="{% url 'courses:add_course_members' course.id %}">Add Members</a>
+    <p>Attendees for <strong>{{ event.name }}</strong></p>
+    <a href="{% url 'events:add_event_members' event.id %}">Add Members</a>
     <div class="flex-container flex-wrap">
 {#        <a href="{% url 'members:add_member' %}">Add Member</a>#}
     </div>
@@ -30,5 +30,5 @@
     {% else %}
         <p>No members to show.</p>
     {% endif %}
-    <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-outline-secondary">Back</a>
+    <a href="{% url 'events:event_detail' event.id %}" class="btn btn-outline-secondary">Back</a>
 {% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends 'portal/base.html' %}
+{% block title_block %}{{ event.event_name }}{% endblock %}
+
+{% block body_block %}
+
+    <table class="table table-bordered course-detail">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ event.name }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ event.type }}</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>{{ event.date }}</td>
+            </tr>
+            <tr>
+                <td>Start Time</td>
+                <td>{{ event.start_time }}</td>
+            </tr>
+            <tr>
+                <td>End Time</td>
+                <td>{{ event.end_time }}</td>
+            </tr>
+            <tr>
+                <td>Attendees</td>
+                <td>{{ event.member_signup.count }}<a href="{% url 'events:event_members' event_id=event.id %}" class="btn btn-outline-primary btn-sm table-side-button">Show List</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+<a href="{% url 'events:events' %}" class="btn btn-outline-secondary">Back to Courses</a>
+<a href="{% url 'events:edit_event' event_id=event.id %}" class="btn btn-outline-warning">Edit</a>
+
+{% endblock %}

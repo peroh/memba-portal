@@ -11,7 +11,7 @@
         <form id="member_form" method="post" action="{% url 'members:add_member' %}">
             {% csrf_token %}
             {{ uf.as_p }}
-            {{ upf.as_p }}
+            {{ mf.as_p }}
             <input type="submit" name="submit" value="Add Member" />
         </form>
     </div>

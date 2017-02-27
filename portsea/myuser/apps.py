@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class CustomUserOfficialConfig(AppConfig):
-    name = 'custom_user_official'
+    name = 'myuser'

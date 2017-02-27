@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'members',
     'courses',
     'club',
-    'custom_user_official',
+    'myuser',
     'awards',
     'events',
     # 'registration',
@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 # AUTHENTICATION_BACKENDS = ('custom_user.backends.CustomUserAuth',)
 
 # official django example
-AUTH_USER_MODEL = 'custom_user_official.MyUser'
+AUTH_USER_MODEL = 'myuser.MyUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

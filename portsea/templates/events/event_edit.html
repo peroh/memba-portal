@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends 'portal/base.html' %}
+{% block title_block %}{{ event.name }}{% endblock %}
+
+{% block body_block %}
+
+    <form id="add_event" method="post" action="{% url 'events:edit_event' event_id=event.id %}">
+    {% csrf_token %}
+        <table class="table table-bordered course-detail">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ form.type }}</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>{{ form.date }}</td>
+            </tr>
+            <tr>
+                <td>Start Time</td>
+                <td>{{ form.start_time }}</td>
+            </tr>
+            <tr>
+                <td>End Time</td>
+                <td>{{ form.end_time }}</td>
+            </tr>
+            <tr>
+                <td>Attendees</td>
+                <td>{{ event.member_signup.count }}<a href="" class="btn btn-outline-primary btn-sm table-side-button">Show List</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit" name="submit">Update</button>
+    <a href="{% url 'events:event_detail' event_id=event.id %}" class="btn btn-danger">Cancel</a>
+    </form>
+
+<a href="{% url 'events:events' %}" class="btn btn-outline-secondary">Back to Events</a>
+<a href="{% url 'events:edit_event' event_id=event.id %}" class="btn btn-outline-warning">Edit</a>
+
+{% endblock %}

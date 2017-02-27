@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, reverse
 from courses.models import Course, PaperworkHistory
 from courses.forms import CourseForm, AddCourseMembers
+from members.models import Member
 
 
 def courses(request):
@@ -13,9 +14,11 @@ def courses(request):
 def course_detail(request, course_id):
     course = Course.objects.get(pk=course_id)
     paperwork_history = course.paperworkhistory_set.all()
+
     context_dict = {
         'course': course,
         'paperwork_history': paperwork_history,
+
     }
     return render(request, 'courses/course_detail.html', context_dict)
 
@@ -29,6 +32,7 @@ def edit_course(request, course_id=None):
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
         if form.is_valid:
+
             form.save(commit=True)
             if course_id:
                 return HttpResponseRedirect(reverse('courses:course_detail', kwargs={'course_id': course_id}))
@@ -64,19 +68,24 @@ def course_members(request, course_id):
 def add_course_members(request, course_id):
 
     course = Course.objects.get(pk=course_id)
-    form = AddCourseMembers()
+    form = AddCourseMembers(course_id=course_id)
+    members_not_registered = Member.objects.exclude(id__in=(Course.objects.get(id=course_id).members.all()))
+    print members_not_registered
 
     if request.method == 'POST':
-        form = AddCourseMembers(request.POST, instance=course)
+        form = AddCourseMembers(request.POST, course_id=course_id)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('courses:course_detail', kwargs={'course_id':course.id}))
+            new_members = form.cleaned_data['members']
+            for member in new_members:
+                course.members.add(member)
+            return HttpResponseRedirect(reverse('courses:course_members', kwargs={'course_id':course.id}))
         else:
             print form.errors
 
     context_dict = {
         'course': course,
         'form': form,
+        'members_not_registered': members_not_registered,
     }
 
     return render(request, 'courses/course_add_members.html', context_dict)

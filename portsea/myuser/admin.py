@@ -4,16 +4,32 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from custom_user_official.models import MyUser
+from myuser.models import MyUser
 from courses.models import Course
 # from awards.models import Award
 from members.models import Member
+from members.admin import MemberInlineAdmin
 from courses.admin import CourseInlineAdmin
 
+class MyUserCreationForm(forms.ModelForm):
+    """
+    To create new users without seeing password fields.
+    """
 
-class UserCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
+    class Meta:
+        model = MyUser
+        fields = ('first_name', 'last_name', 'email', 'is_active')
+
+    def save(self, commit=True):
+        user = super(MyUserCreationForm, self).save(commit=False)
+        if commit:
+            user.save()
+        return user
+
+class MyUserCreationFormPassword(forms.ModelForm):
+    """
+    To create new users seeing the password fields e.g. for admin.
+    """
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=False)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput, required=False)
 
@@ -31,8 +47,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super(UserCreationForm, self).save(commit=False)
-        # user.set_password(self.cleaned_data["password1"])
+        user = super(MyUserCreationFormPassword, self).save(commit=False)
         if commit:
             user.save()
         return user
@@ -60,19 +75,10 @@ class UserChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
-# class CourseInlineAdmin(admin.TabularInline):
-#     model = Course.members.through
-
-# class AwardInlineAdmin(admin.TabularInline):
-#     model = Award.members.through
-
-# class MemberInlineAdmin(admin.TabularInline):
-#     model = Member
-
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
-    add_form = UserCreationForm
+    add_form = MyUserCreationFormPassword
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
@@ -87,10 +93,10 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2',)}
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
         ),
     )
-    # inlines = (MemberInlineAdmin,)
+    inlines = (MemberInlineAdmin,)
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
