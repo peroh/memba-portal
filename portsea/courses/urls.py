@@ -1,4 +1,5 @@
 from django.conf.urls import url
+
 from courses  import views
 
 app_name = 'courses'

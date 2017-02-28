@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
+
 from events.forms import EventForm, AddEventMembers
 from events.models import Event, EventSignup
 from members.models import Member
@@ -6,12 +7,14 @@ from members.models import Member
 
 def events(request):
     event_list = Event.objects.all()
+
     context_dict = {'event_list': event_list}
     return render(request, 'events/events.html', context_dict)
 
 
 def event_detail(request, event_id):
     event = Event.objects.get(pk=event_id)
+
     context_dict = {
         'event': event,
     }
@@ -19,7 +22,6 @@ def event_detail(request, event_id):
 
 
 def add_event(request):
-
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid:

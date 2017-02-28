@@ -1,11 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
 from myuser.models import MyUser
 
+
 class MyUserCreationForm(forms.ModelForm):
-    """
-    To create new users without seeing password fields.
-    """
+    """To create new users without seeing password fields."""
 
     class Meta:
         model = MyUser
@@ -17,12 +17,20 @@ class MyUserCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class MyUserCreationFormPassword(forms.ModelForm):
-    """
-    To create new users seeing the password fields e.g. for admin.
-    """
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=False)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput, required=False)
+    """To create new users seeing the password fields e.g. for admin."""
+
+    password1 = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput,
+        required=False,
+    )
+    password2 = forms.CharField(
+        label='Password confirmation',
+        widget=forms.PasswordInput,
+        required=False,
+    )
 
     class Meta:
         model = MyUser
@@ -50,10 +58,12 @@ class UserChangeForm(forms.ModelForm):
     password hash display field.
     """
 
-    password = ReadOnlyPasswordHashField(label=("Password"),
-                                         help_text=("Raw passwords are not stored, so there is no way to see "
-                                                    "this user's password, but you can change the password "
-                                                    "using <a href=\"../password/\">this form</a>."))
+    password = ReadOnlyPasswordHashField(
+        label=("Password"),
+        help_text=("Raw passwords are not stored, so there is no way to see "
+                   "this user's password, but you can change the password "
+                   "using <a href=\"../password/\">this form</a>."),
+    )
 
     class Meta:
         model = MyUser

@@ -1,18 +1,18 @@
 from __future__ import unicode_literals
-import os
 from django.db import models
+import os
+
 from club.models import Club
-# import members
 
-
-# Create your models here.
 
 class CourseType(models.Model):
     course_type = models.CharField(max_length=128)
-    paperwork_template = models.FileField(upload_to='paperwork_templates', blank=True)
+    paperwork_template = models.FileField(upload_to='paperwork_templates',
+                                          blank=True)
 
     def __str__(self):
         return self.course_type
+
 
 class Course(models.Model):
     course_max_length = 128
@@ -22,11 +22,10 @@ class Course(models.Model):
     course_end_date = models.DateField(null=True, blank=True)
     club = models.ForeignKey('club.Club', null=True, default=None)
     members = models.ManyToManyField('members.Member')
-    # trainer = models.ForeignKey('members.Member', related_name="trainer_set", blank=True)
-    # assessor = models.ForeignKey('members.Member', related_name="assessor_set", blank=True)
 
     def __str__(self):
         return self.course_name
+
 
 class PaperworkHistory(models.Model):
     paperwork = models.FileField()

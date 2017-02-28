@@ -1,7 +1,9 @@
 from django import forms
+from django.forms.extras.widgets import SelectDateWidget
+
 from courses.models import Course, CourseType
 from members.models import Member
-from django.forms.extras.widgets import SelectDateWidget
+
 
 class CourseForm(forms.ModelForm):
     course_name = forms.CharField(max_length=Course.course_max_length)
@@ -21,6 +23,7 @@ class CourseForm(forms.ModelForm):
         self.fields['course_start_date'].label = "Start Date"
         self.fields['course_end_date'].label = "End Date"
 
+
 class AddCourseMembers(forms.ModelForm):
 
     class Meta:
@@ -29,9 +32,9 @@ class AddCourseMembers(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         course_id = kwargs.pop('course_id')
-        # get members registered to course
+        # Get members registered to current course
         members_registered = Course.objects.get(id=course_id).members.all()
-        # list of all members not registered to course
+        # List of all members not registered to course
         members_not_registered = Member.objects.exclude(id__in=members_registered)
         super(AddCourseMembers, self).__init__(*args, **kwargs)
         self.fields['members'] = forms.ModelMultipleChoiceField(
