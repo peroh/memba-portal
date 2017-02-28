@@ -39,36 +39,23 @@ def add_event(request):
 
 
 def edit_event(request, event_id):
-    if event_id:
-        event = Event.objects.get(pk=event_id)
-    else:
-        event = None
+    event = Event.objects.get(pk=event_id)
 
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid:
             form.save(commit=True)
-            if event_id:
-                return HttpResponseRedirect(reverse('events:event_detail', kwargs={'event_id': event_id}))
-            else:
-                return HttpResponseRedirect(reverse('events:events'))
+            return HttpResponseRedirect(reverse('events:event_detail', kwargs={'event_id': event_id}))
         else:
             print form.errors
     else:
         form = EventForm(instance=event)
 
-    context_dict_edit = {
+    context_dict = {
         'form': form,
         'event': event,
     }
-    context_dict_add = {
-        'form': form,
-    }
-
-    if event_id:
-        return render(request, 'events/event_edit.html', context=context_dict_edit)
-    else:
-        return render(request, 'events/event_add.html', context=context_dict_add)
+    return render(request, 'events/event_edit.html', context=context_dict)
 
 
 def event_members(request, event_id):
@@ -80,8 +67,8 @@ def event_members(request, event_id):
     }
     return render(request, 'events/event_members.html', context_dict)
 
-def add_event_members(request, event_id):
 
+def add_event_members(request, event_id):
     event = Event.objects.get(pk=event_id)
     form = AddEventMembers(event_id=event_id)
     members_not_registered = Member.objects.exclude(id__in=(Event.objects.get(id=event_id).member_signup.all()))
@@ -101,5 +88,4 @@ def add_event_members(request, event_id):
         'form': form,
         'members_not_registered': members_not_registered,
     }
-
     return render(request, 'events/add_event_members.html', context_dict)
