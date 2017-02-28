@@ -22,39 +22,46 @@ def course_detail(request, course_id):
     }
     return render(request, 'courses/course_detail.html', context_dict)
 
+def add_course(request):
 
-def edit_course(request, course_id=None):
-    if course_id:
-        course = Course.objects.get(pk=course_id)
-    else:
-        course = None
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect(reverse('courses:courses'))
+        else:
+            print form.errors
+
+    form = CourseForm()
+
+    context_dict = {
+        'form': form,
+    }
+
+    return render(request, 'courses/course_add.html', context=context_dict)
+
+
+def edit_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
 
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
         if form.is_valid:
-
             form.save(commit=True)
-            if course_id:
-                return HttpResponseRedirect(reverse('courses:course_detail', kwargs={'course_id': course_id}))
-            else:
-                return HttpResponseRedirect(reverse('courses:courses'))
+            return HttpResponseRedirect(reverse('courses:course_detail', kwargs={'course_id': course_id}))
         else:
             print form.errors
     else:
         form = CourseForm(instance=course)
 
-    context_dict_edit = {
+    context_dict = {
         'form': form,
         'course': course,
     }
-    context_dict_add = {
-        'form': form,
-    }
 
-    if course_id:
-        return render(request, 'courses/course_edit.html', context=context_dict_edit)
-    else:
-        return render(request, 'courses/course_add.html', context=context_dict_add)
+    return render(request, 'courses/course_edit.html', context=context_dict)
+
+
 
 def course_members(request, course_id):
     course = Course.objects.get(pk=course_id)

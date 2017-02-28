@@ -1,9 +1,7 @@
 from django import forms
 from courses.models import Course, CourseType
 from members.models import Member
-from myuser.models import MyUser
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import ClearableFileInput
 
 class CourseForm(forms.ModelForm):
     course_name = forms.CharField(max_length=Course.course_max_length)
@@ -14,7 +12,7 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ['course_name', 'course_type', "course_start_date", "course_end_date"]
+        fields = ['course_name', 'course_type', 'course_start_date', 'course_end_date']
 
     def __init__(self, *args, **kwargs):
         super(CourseForm, self).__init__(*args, **kwargs)
