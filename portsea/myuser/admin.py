@@ -11,7 +11,6 @@ class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = MyUserCreationFormPassword
-
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.

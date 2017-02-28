@@ -1,4 +1,5 @@
 from django.conf.urls import url
+
 from portal import views
 
 app_name = 'portal'

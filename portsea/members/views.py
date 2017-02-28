@@ -44,6 +44,7 @@ def member_detail(request, user_id):
     }
     return render(request, 'members/member_detail.html', context_dict)
 
+
 def edit_member(request, user_id):
     user = MyUser.objects.get(pk=user_id)
     member = user.member

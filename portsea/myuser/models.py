@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
-
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db import models
+
 from club.models import Club
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
@@ -26,9 +25,8 @@ class MyUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, first_name, last_name, password):
-        """
-        Creates and saves a superuser with the given email, first_name, last_name
-        and password.
+        """Creates and saves a superuser with the given email,
+        first_name, last_name and password.
         """
         user = self.create_user(
             email,
@@ -39,6 +37,7 @@ class MyUserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
+
 
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
@@ -51,7 +50,6 @@ class MyUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     # club = models.ForeignKey('club.Club', null=True, blank=True, default=None)
-
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
