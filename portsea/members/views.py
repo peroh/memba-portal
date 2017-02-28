@@ -11,20 +11,20 @@ def members(request):
     return render(request, 'members/members.html', context_dict)
 
 
-def add_member(request, redirect=None):
+def add_member(request):
     if request.method == 'POST':
         user_form = MyUserCreationForm(request.POST, prefix='user')
-        profile_form = MemberForm(request.POST, prefix='userprofile')
-        if user_form.is_valid() and profile_form.is_valid():
+        member_form = MemberForm(request.POST, prefix='userprofile')
+        if user_form.is_valid() and member_form.is_valid():
             user = user_form.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
+            member = member_form.save(commit=False)
+            member.user = user
+            member.save()
             return HttpResponseRedirect(reverse('members:add_member_success'))
     else:
         user_form = MyUserCreationForm(prefix='user')
-        profile_form = MemberForm(prefix='userprofile')
-    return render(request, 'members/add_member.html', {'uf': user_form, 'mf': profile_form})
+        member_form = MemberForm(prefix='member')
+    return render(request, 'members/add_member.html', {'user_form': user_form, 'member_form': member_form})
 
 def member_detail(request, user_id):
     user = MyUser.objects.get(pk=user_id)
