@@ -49,24 +49,24 @@ def edit_member(request, user_id):
     member = user.member
 
     if request.method == 'POST':
-        uf = MyUserCreationForm(request.POST, instance=user)
-        mf = MemberForm(request.POST, instance=member)
-        if uf.is_valid and mf.is_valid:
-            uf.save(commit=True)
-            mf.save(commit=True)
+        user_form = MyUserCreationForm(request.POST, instance=user)
+        member_form = MemberForm(request.POST, instance=member)
+        if user_form.is_valid and member_form.is_valid:
+            user_form.save(commit=True)
+            member_form.save(commit=True)
             return HttpResponseRedirect(reverse(
                 'members:member_detail',
                 kwargs={'user_id': user_id},
                 ))
         else:
-            print uf.errors, mf.errors
+            print user_form.errors, member_form.errors
     else:
-        uf = MyUserCreationForm(instance=user)
-        mf = MemberForm(instance=member)
+        user_form = MyUserCreationForm(instance=user)
+        member_form = MemberForm(instance=member)
 
     context_dict = {
-        'uf': uf,
-        'mf': mf,
+        'user_form': user_form,
+        'member_form': member_form,
         'user': user,
     }
     return render(request, 'members/member_edit.html', context_dict)
