@@ -1,13 +1,17 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
+
 from members.forms import MemberForm
-from myuser.forms import MyUserCreationFormPassword, MyUserCreationForm
+from myuser.forms import MyUserCreationForm
 from myuser.models import MyUser
 
 
 def members(request):
     user_list = MyUser.objects.all()
-    context_dict = {'user_list': user_list}
+
+    context_dict = {
+        'user_list': user_list
+    }
     return render(request, 'members/members.html', context_dict)
 
 
@@ -24,17 +28,23 @@ def add_member(request):
     else:
         user_form = MyUserCreationForm(prefix='user')
         member_form = MemberForm(prefix='member')
-    return render(request, 'members/add_member.html', {'user_form': user_form, 'member_form': member_form})
+
+    context_dict = {
+        'user_form': user_form,
+        'member_form': member_form,
+    }
+    return render(request, 'members/add_member.html', context_dict)
+
 
 def member_detail(request, user_id):
     user = MyUser.objects.get(pk=user_id)
+
     context_dict = {
         'user': user,
     }
     return render(request, 'members/member_detail.html', context_dict)
 
 def edit_member(request, user_id):
-
     user = MyUser.objects.get(pk=user_id)
     member = user.member
 
@@ -44,23 +54,22 @@ def edit_member(request, user_id):
         if uf.is_valid and mf.is_valid:
             uf.save(commit=True)
             mf.save(commit=True)
-            return HttpResponseRedirect(reverse('members:member_detail', kwargs={'user_id': user_id}))
-
+            return HttpResponseRedirect(reverse(
+                'members:member_detail',
+                kwargs={'user_id': user_id},
+                ))
         else:
             print uf.errors, mf.errors
     else:
         uf = MyUserCreationForm(instance=user)
         mf = MemberForm(instance=member)
 
-    context_dict_edit = {
+    context_dict = {
         'uf': uf,
         'mf': mf,
         'user': user,
     }
-
-    return render(request, 'members/member_edit.html', context=context_dict_edit)
-
-
+    return render(request, 'members/member_edit.html', context_dict)
 
 
 def add_member_success(request):

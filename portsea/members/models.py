@@ -8,7 +8,6 @@ class Member(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     club = models.ForeignKey('club.Club', null=True, blank=True, default=None)
 
-
     def __str__(self):
         if self.user:
             first_name = self.user.first_name
