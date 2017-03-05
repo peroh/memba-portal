@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
+from datetime import datetime
 from django.db import models
 import os
-
-from club.models import Club
 
 
 class CourseType(models.Model):
@@ -30,6 +29,7 @@ class Course(models.Model):
 class PaperworkHistory(models.Model):
     paperwork = models.FileField()
     course = models.ForeignKey('Course')
+    date_time = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return os.path.basename(self.paperwork.name)
