@@ -6,11 +6,20 @@ import os
 
 class CourseType(models.Model):
     course_type = models.CharField(max_length=128)
-    paperwork_template = models.FileField(upload_to='paperwork_templates',
-                                          blank=True)
 
     def __str__(self):
         return self.course_type
+
+    def get_paperwork(self):
+        return self.paperworktemplates_set.all()
+
+
+class PaperworkTemplates(models.Model):
+    paperwork = models.FileField(upload_to='paperwork_templates')
+    course_type = models.ForeignKey('CourseType')
+
+    def __str__(self):
+        return os.path.basename(self.paperwork.name)
 
 
 class Course(models.Model):

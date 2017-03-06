@@ -2,8 +2,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, reverse
 
 from courses.forms import CourseForm, AddCourseMembers
-from courses.models import Course, PaperworkHistory
+from courses.models import Course, PaperworkHistory, PaperworkTemplates
 from members.models import Member
+from pdfgen.fill_checklist import fill_checklist
 
 
 def courses(request):
@@ -14,13 +15,17 @@ def courses(request):
 
 def course_detail(request, course_id):
     course = Course.objects.get(pk=course_id)
+    course_name = course.course_name
+    paperwork_templates = course.course_type.paperworktemplates_set.all()
     paperwork_history = course.paperworkhistory_set.all()
 
     context_dict = {
         'course': course,
         'paperwork_history': paperwork_history,
+        'paperwork_templates': paperwork_templates,
     }
     return render(request, 'courses/course_detail.html', context_dict)
+
 
 def add_course(request):
     if request.method == 'POST':
@@ -109,3 +114,18 @@ def download_pdf(request, paperwork_id, download_type):
         response['Content-Type'] = 'application/pdf'
         response['Content-Disposition'] = download_type + ';filename=file.pdf'
         return response
+
+
+def create_paperwork(request, course_id, paperwork_id):
+
+    paperwork_template = PaperworkTemplates.objects.get(pk=paperwork_id)
+    course = Course.objects.get(pk=course_id)
+    course_list = course.members.all()
+    course_size = course_list.count()
+
+    fill_checklist(paperwork_template, course_size, course_list, course)
+
+    return HttpResponseRedirect(reverse('courses:courses'))
+
+
+

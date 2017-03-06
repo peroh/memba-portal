@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from courses  import views
+from courses import views
 
 app_name = 'courses'
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^course_detail/(?P<course_id>[0-9]+)/members/add_member/$', views.add_course_members, name="add_course_members"),
     url(r'^course_detail/(?P<download_type>[\w]+)/(?P<paperwork_id>[0-9]+)/$', views.download_pdf, name="download_pdf"),
     url(r'^course_detail/show/(?P<paperwork_id>[0-9]+)/$', views.download_pdf, name="show_pdf"),
+    url(r'^course_detail/(?P<course_id>[0-9]+)/add_paperwork/(?P<paperwork_id>[0-9]+)/$', views.create_paperwork, name="create_paperwork"),
 ]
