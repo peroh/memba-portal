@@ -31,6 +31,7 @@ def fill_checklist(input_file, course_size, course_list, course):
     output_file = "test"
     number_candidates = course_size
     date = datetime.now().date()
+    paperwork_type = input_file.paperwork_type.replace(" ", "")
 
     time = datetime.now().time()
     date_string = str(date.strftime("%d-%m-%y"))
@@ -89,11 +90,19 @@ def fill_checklist(input_file, course_size, course_list, course):
         fdf_file.write(fdf_data)
         fdf_file.close()
 
+
+        input_loc = settings.MEDIA_ROOT + "/paperwork_templates/"
+        input_name = str(input_file)
+        final_input = input_loc + input_name
+
         output_loc = settings.MEDIA_ROOT + "/paperwork_history/"
-        final_output = output_loc + course_name + "_" + str(loop_count) + "_" + date_string + "_" + time_string + file_extension
+        output_name = course_name + "_" + paperwork_type + "_" + str(loop_count) + "_" + date_string + "_" + time_string + file_extension
+        # output_name = course_name + "_" + str(loop_count) + "_" + date_string + "_" + time_string + file_extension
+        final_output = output_loc + output_name
+        # final_output = "media/paperwork_history/" + "blah" + str(loop_count) + file_extension
 
         # Run pdftk system command to populate the pdf file. The file "file_fdf.fdf" is pushed in to input_file thats generated as a new output_file.
-        pdftk = "pdftk " + str(input_file) + " fill_form file_fdf.fdf output" + final_output + "flatten"
+        pdftk = "pdftk " + final_input + " fill_form file_fdf.fdf output " + final_output + " flatten"
         os.system(pdftk)
 
         PaperworkHistory.objects.create(paperwork=final_output, course=course)

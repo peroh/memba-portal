@@ -16,6 +16,7 @@ class CourseType(models.Model):
 
 class PaperworkTemplates(models.Model):
     paperwork = models.FileField(upload_to='paperwork_templates')
+    paperwork_type = models.CharField(max_length=128)
     course_type = models.ForeignKey('CourseType')
 
     def __str__(self):

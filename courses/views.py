@@ -125,7 +125,8 @@ def create_paperwork(request, course_id, paperwork_id):
 
     fill_checklist(paperwork_template, course_size, course_list, course)
 
-    return HttpResponseRedirect(reverse('courses:courses'))
+    return HttpResponseRedirect(reverse('courses:course_detail',
+                                        kwargs={'course_id': course_id}))
 
 
 

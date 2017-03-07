@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'myuser',
     'awards',
     'events',
+    'pdfgen',
     'bootstrap_toolkit',
     'django.contrib.admin',
     'django.contrib.auth',
