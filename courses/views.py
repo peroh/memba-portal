@@ -27,7 +27,9 @@ class CourseDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CourseDetail, self).get_context_data(**kwargs)
         course = super(CourseDetail, self).get_object()
-        context['paperwork_templates'] = course.course_type.paperworktemplates_set.all()
+        context['paperwork_templates'] = (
+            course.course_type.paperworktemplates_set.all()
+        )
         context['paperwork_history'] = course.paperworkhistory_set.all()
         return context
 
@@ -61,12 +63,7 @@ class CourseMembers(TemplateView):
         return context
 
 
-
-
 # Function-based views
-
-
-
 
 def add_course_members(request, course_id):
     course = Course.objects.get(pk=course_id)
@@ -84,7 +81,7 @@ def add_course_members(request, course_id):
                 course.members.add(member)
             return HttpResponseRedirect(reverse(
                 'courses:course_members',
-                kwargs={'course_id':course.id},
+                kwargs={'pk':course.id},
                 ))
         else:
             print form.errors
