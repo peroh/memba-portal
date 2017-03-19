@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from django.db import models
+from django.shortcuts import reverse
 import os
 
 
@@ -34,6 +35,9 @@ class Course(models.Model):
 
     def __str__(self):
         return self.course_name
+
+    def get_absolute_url(self):
+        return reverse('courses:course_detail', kwargs={'pk': self.pk})
 
 
 class PaperworkHistory(models.Model):

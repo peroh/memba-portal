@@ -20,7 +20,7 @@
             </thead>
             {% for course in course_list %}
                 <tbody>
-                    <tr class="clickable-row" data-url="{% url 'courses:course_detail' course_id=course.id %}">
+                    <tr class="clickable-row" data-url="{% url 'courses:course_detail' pk=course.id %}">
 {#                        <td><a href="{% url 'courses:course_detail' course_id=course.id %}">{{ course.course_name }}</a></td>#}
                         <td>{{ course.course_name }}</td>
                         <td>{{ course.course_type }}</td>

@@ -66,7 +66,7 @@
                 <td>Attendees</td>
                 <td>
                     {{ course.members.count }}
-                    <a href="{% url 'courses:course_members' course_id=course.id %}" class="btn btn-outline-primary
+                    <a href="{% url 'courses:course_members' pk=course.id %}" class="btn btn-outline-primary
                     btn-sm table-side-button">Show List</a>
                 </td>
             </tr>
@@ -74,7 +74,7 @@
     </table>
 
 <a href="{% url 'courses:courses' %}" class="btn btn-outline-secondary">Back to Courses</a>
-<a href="{% url 'courses:edit_course' course_id=course.id %}" class="btn btn-outline-warning">Edit</a>
+<a href="{% url 'courses:update_course' pk=course.id %}" class="btn btn-outline-warning">Edit</a>
 
 <script type="text/javascript">
 
