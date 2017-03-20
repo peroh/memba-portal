@@ -1,15 +1,14 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.views.generic import ListView
 
 from events.forms import EventForm, AddEventMembers
 from events.models import Event, EventSignup
 from members.models import Member
 
 
-def events(request):
-    event_list = Event.objects.all()
-
-    context_dict = {'event_list': event_list}
-    return render(request, 'events/events.html', context_dict)
+class Events(ListView):
+    template_name = 'events/events.html'
+    model = Event
 
 
 def event_detail(request, event_id):
@@ -89,3 +88,12 @@ def add_event_members(request, event_id):
         'members_not_registered': members_not_registered,
     }
     return render(request, 'events/add_event_members.html', context_dict)
+
+
+# old function-based views
+
+# def events(request):
+#     event_list = Event.objects.all()
+#
+#     context_dict = {'event_list': event_list}
+#     return render(request, 'events/events.html', context_dict)
