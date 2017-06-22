@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
 ### AUTH ###
 
-# Official django example
 AUTH_USER_MODEL = 'myuser.MyUser'
 
 MIDDLEWARE = [
