@@ -2,6 +2,7 @@ appdirs==1.4.0
 Django==1.10.5
 django-authtools==1.5.0
 django-bootstrap-toolkit==2.15.0
+fdfgen==0.16.1
 olefile==0.44
 packaging==16.8
 Pillow==4.0.0
