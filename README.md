@@ -15,7 +15,7 @@ started building this membership management tool.
 ## Functionality
 
 * Seperate apps for Members, Courses, Awards, Events, and PDF Generation
-*
+* Mix of class/function based views
 * Custom `User` model to signup and uses standard django auth with
   an email address
 * Basic bootstrap templates
